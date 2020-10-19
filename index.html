@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Complimentor</title>
+		<style>
+			*,
+			*::before,
+			*::after {
+				font-family: 'Century Gothic';
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			#container {
+				width: 100vw;
+				min-height: 100vh;
+				background: #ecf0f1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			#compliment {
+				font-size: 72px;
+				color: #2c3e50;
+				text-align: center;
+			}
+
+			#button {
+				padding: 10px;
+				border: 1px solid #2c3e50;
+				background: #2c3e50;
+				color: white;
+				font-size: 20px;
+				border-radius: 10px;
+				transition: 500ms;
+				margin-top: 30px;
+			}
+
+			#button:hover {
+				color: #2c3e50;
+				background: #ecf0f1;
+				border: 1px solid #2c3e50;
+				cursor: pointer;
+			}
+
+			#button:focus {
+				outline: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<h1 id="compliment"></h1>
+			<button id="button">Another One!</button>
+		</div>
+
+		<script>
+			const compliment = document.getElementById('compliment'),
+				button = document.getElementById('button');
+
+			button.addEventListener('click', getCompliment);
+
+			function getCompliment() {
+				fetch('https://complimentr.com/api')
+					.then((res) => res.json())
+					.then((res) => {
+						let { compliment: compText } = res;
+						compText = compText[0].toUpperCase() + compText.slice(1);
+
+						compliment.textContent = compText;
+					});
+			}
+
+			getCompliment();
+		</script>
+	</body>
+</html>
